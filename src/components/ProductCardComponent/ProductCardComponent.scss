@@ -1,0 +1,15 @@
+.ProductCardComponent {
+    display: flex;
+    align-items: center;
+
+    .header__login {
+        display: flex;
+        align-items: center;
+    }
+    img {
+        width: 50px;
+        border-radius: 100%;
+        margin-right: 10px;
+    }
+
+}

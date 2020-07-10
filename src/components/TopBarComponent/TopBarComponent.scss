@@ -1,0 +1,53 @@
+.TopBarComponent {
+  background-color: #fff;
+
+  .header__display {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+
+    .header__img {
+      display: flex;
+      align-items: center;
+
+      img {
+        // height: 2rem;
+        height: 30px;
+      }
+    }
+    .header__icons {
+      > svg {
+        margin-right: 5px;
+        cursor: pointer;
+      }
+
+      .header__count {
+        position: absolute;
+        background: rgb(207, 56, 56);
+        color: #fff;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        font-size: 15px;
+        border-radius: 50px;
+        right: 7px;
+        top: 5px;
+      }
+
+      @media (min-width: 450px) {
+        .header__count {
+          position: absolute;
+          background: rgb(207, 56, 56);
+          color: #fff;
+          width: 15px;
+          height: 15px;
+          text-align: center;
+          font-size: 12px;
+          border-radius: 50px;
+          right: 5px;
+          top: 10px;
+        }
+      }
+    }
+  }
+}

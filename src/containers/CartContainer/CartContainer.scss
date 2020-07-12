@@ -1,0 +1,23 @@
+.CartContainer {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    border-radius: 10px;
+    overflow: hidden;
+
+    .CartContainer__title {
+        background-color: #999999;
+        width: 100%;
+        display: flex;
+        justify-content: center;;
+    }
+
+    .CartContainer__products {
+        .ProductContainer {
+            width: 100%;
+        }
+    }
+    
+
+}

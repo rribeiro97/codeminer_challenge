@@ -16,14 +16,14 @@ const ProductCardComponent = (props) => {
                     <div className="productCard__cart__about">
                         <span className="productCard__cart__about__name"> {product.name}</span>
                         <div className="productCard__cart__about__priceRemaning">
-                            <span>$ {product.price.toFixed(2)} • </span>
-                            <span>{product.available} left</span>
+                            <span>Quantity: {product.available} </span>
+                            <span>$ {product.price.toFixed(2)}</span>
                         </div>
                     </div>
 
                     <div className="productCard__cart__selector">
-                        <button className="productCard__cart__buyButton__btn">+</button>
-                        <button className="productCard__cart__buyButton__btn">-</button>
+                        <button className="productCard__cart__buyButton__btn_plus">+</button>
+                        <button className="productCard__cart__buyButton__btn_minus">-</button>
                     </div>
                 </div>)  
                 :  (

@@ -37,15 +37,15 @@
     }
 }
     .productCard__cart {
-        border: 1px solid transparent;
+        border: 1px solid #BBBBBB;
         margin: 5px;
         border-radius: 10px;
         overflow: hidden;
         display: flex;
 
         .productCard__cart__image {
-            background: #999999;
-            width: 50px;
+            background: #BBBBBB;
+            width: 65px;
             color: #fff;
             display: flex;
             align-items: center;
@@ -53,7 +53,8 @@
         }
         .productCard__cart__about {
             padding: 5px;
-            background-color: #EFEFEF;
+            // background-color: #EFEFEF;
+            min-width: 170px;
 
             .productCard__cart__about__name {
                 font-weight: bold;
@@ -61,15 +62,24 @@
             }
             .productCard__cart__about__priceRemaning {
                 font-size: 12px;
+                display: flex;
+                justify-content: space-between;
             }
         }
         .productCard__cart__selector {
             display: flex;
             flex-direction: column;
             justify-content: center;
+            border: 1px solid #BBBBBB;
+            border-radius: 5px;
+        
 
-            .productCard__cart__buyButton__btn {
+            .productCard__cart__buyButton__btn_plus,.productCard__cart__buyButton__btn_minus {
                 color: #000;
+                height: 50%;
+            }
+            .productCard__cart__buyButton__btn_plus {
+                border-bottom: 1px solid #BBB;
             }
         }
     }

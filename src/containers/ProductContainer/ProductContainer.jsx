@@ -3,16 +3,25 @@ import ProductCardComponent from '../../components/ProductCardComponent/ProductC
 import './ProductContainer.scss';
 
 const ProductContainer = (props) => {
-    const { products } = props;
+    const { products, isCart} = props;
+    const selectedProducts = products;
     console.log('prop',props);
     return(
-        <div className="ProductContainer">
-            {
-                // products.map( (product) => (
-                    <ProductCardComponent  />
-                // ))
-            }
-        </div>
+        <>
+            { isCart ?  (
+            <div className="ProductContainer"> 
+                { selectedProducts.map( (selectedProduct) => (
+                    <ProductCardComponent product={selectedProduct} isCart={true} />
+                ))}
+            </div>    
+            ): (
+             <div className="ProductContainer"> 
+               { products.map( (selectedProduct) => (
+                <ProductCardComponent product={selectedProduct} isCart={false} />
+                ))}
+            </div>
+            )}
+    </>
     )
 }
 

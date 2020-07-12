@@ -1,5 +1,6 @@
-.CartContainer {
+.ProductContainer {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
 
     .header__login {

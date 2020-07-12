@@ -1,0 +1,25 @@
+.ValuesInformationComponent {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 10px;
+    font-size: 15px;
+    color: #000;
+
+    .ValuesInformationComponent__Subtotal,.ValuesInformationComponent__Shipping, .ValuesInformationComponent__Discount,.ValuesInformationComponent__Total {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 5px;
+        border-top: 1px solid #bbb;
+    }
+    .ValuesInformationComponent__ {
+        padding:10px;
+    }
+    .ValuesInformationComponent__{
+        padding: 10px;
+        background-color: #000;
+    }
+    .ValuesInformationComponent__ {
+        color:#fff;
+    }
+}

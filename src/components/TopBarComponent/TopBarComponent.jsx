@@ -1,26 +1,30 @@
 import React from 'react';
 import './TopBarComponent.scss'
-import { Link } from 'react-router-dom';
-import UserLoginComponent from '../UserLoginComponent/UserLoginComponent';
+import UserLoginComponent from './Components/UserLoginComponent'
 
-
-const Topbar = () => {
+const TopBarComponent = () => {
 
   return (
     <header className="TopBarComponent">
       <nav className="header">
         <div className="container header__display">
-          <div className="header__img">
+          <div className="header__logo">
             <img
               src="assets/logo.svg"
               alt="logo"
             />
           </div>
-          <UserLoginComponent />
+          <div className="header__profile">
+            <img
+              src="assets/walter-white.jpg"
+              alt="logo"
+            />
+            <span>Walter White</span>
+          </div>
         </div>
       </nav>
     </header>
   );
 };
 
-export default Topbar;
+export default TopBarComponent;

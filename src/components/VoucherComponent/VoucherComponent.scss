@@ -1,0 +1,17 @@
+.VoucherComponent {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    padding: 10px 0;
+
+    .VoucherComponent__inputVoucher {
+        padding:10px;
+    }
+    .VoucherComponent__InsertVoucher {
+        padding: 10px;
+        background-color: #000;
+    }
+    .VoucherComponent__InsertVoucher__btn {
+        color:#fff;
+    }
+}

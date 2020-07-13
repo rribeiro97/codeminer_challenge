@@ -2,8 +2,9 @@ import React from 'react';
 import './ProductCardComponent.scss';
 
 const ProductCardComponent = (props) => {
-    const { product, isCart } = props;
-        return(
+    const { product, isCart, addProduct, quantityHandler } = props;
+    console.log('productCard',props);
+            return(
             <>
             {isCart ? (
                 <div className="productCard__cart">
@@ -16,14 +17,14 @@ const ProductCardComponent = (props) => {
                     <div className="productCard__cart__about">
                         <span className="productCard__cart__about__name"> {product.name}</span>
                         <div className="productCard__cart__about__priceRemaning">
-                            <span>Quantity: {product.available} </span>
-                            <span>$ {product.price.toFixed(2)}</span>
+                            <span>Quantity: {product.reserved} </span>
+                            <span>$ {(product.price*product.reserved).toFixed(2)}</span>
                         </div>
                     </div>
 
                     <div className="productCard__cart__selector">
-                        <button className="productCard__cart__buyButton__btn_plus">+</button>
-                        <button className="productCard__cart__buyButton__btn_minus">-</button>
+                        <button onClick={() => quantityHandler(product.id, "plus")} className="productCard__cart__buyButton__btn_plus">+</button>
+                        <button onClick={() => quantityHandler(product.id, "minus")} className="productCard__cart__buyButton__btn_minus">-</button>
                     </div>
                 </div>)  
                 :  (
@@ -43,7 +44,7 @@ const ProductCardComponent = (props) => {
                     </div>
 
                     <div className="productCard__buyButton">
-                        <button className="productCard__buyButton__btn">Buy</button>
+                        <button onClick={() => addProduct(product.id)} className="productCard__buyButton__btn">Buy</button>
                     </div>
                 </div>
             )

@@ -5,8 +5,20 @@
     .ProductContainer {
         width: 70%;
     }
-    .CartContainer {
+    .CartArea {
         width: 30%;
         background-color: #D8D8D8;
+    }
+
+    .CartArea__checkoutButton {
+        padding: 10px;
+
+        display: flex;
+        justify-content: center;
+        background: #000;
+        
+        button {
+            color: white;
+        }
     }
 }

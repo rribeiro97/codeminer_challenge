@@ -6,6 +6,9 @@
     border-radius: 10px;
     overflow: hidden;
 
+    .CartContainer__zero {
+        
+    }
     .CartContainer__title {
         background-color: #999999;
         width: 100%;
@@ -14,9 +17,19 @@
     }
 
     .CartContainer__products {
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+
+        .CartContainer__products__zero {
+            font-size: 11px;
+        }
         .ProductContainer {
             width: 100%;
         }
+    }
+    .CartContainer__valuesInformation {
+        width: 100%;
     }
     
 

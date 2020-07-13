@@ -7,13 +7,23 @@ const HomePage = () => {
 
     const [fetchedProducts,setFetchedProducts] = useState([]);
     const [fetchedVouchers,setFetchedVouchers] = useState([]);
-
+    const [insertedVouchers,setInsertedVouchers] = useState([]);
+    const [subTotalPrice,setSubTotalPrice] = useState(0);
+    let [products, setProducts] = useState([]);
+    let values = { subtotal: subTotalPrice, shipping:10, discount:20, total:100}
+    
     useEffect(() =>{
         fetchProducts();
         fetchVouchers();
-    },[])
 
-    const fetchProducts = async () => {
+    }, []);
+
+    useEffect( () => {
+        insertReservedData();
+    },[fetchedProducts]);
+    
+    // Fetch Data Functions
+    const fetchProducts = () => {
         axios.get(`https://shielded-wildwood-82973.herokuapp.com/products.json`)
         .then( res => {
             console.log('axiosres', res);
@@ -24,7 +34,7 @@ const HomePage = () => {
         });
     }
     
-    const fetchVouchers = async () => {
+    const fetchVouchers = () => {
         axios.get(`https://shielded-wildwood-82973.herokuapp.com/vouchers.json`)
         .then( res => {
             console.log('axiosresVoucher', res);
@@ -34,16 +44,92 @@ const HomePage = () => {
             fetchVouchers();
         });
     }
+    // End Fetch Functions
+
+    
+
+
+    const insertReservedData = ( ) => {
+        const arrayWithReserved = [];
+        fetchedProducts.map( (product) => {
+            const productWithReserved = {...product, reserved: 0}
+            arrayWithReserved.push(productWithReserved);
+        })
+        setProducts(arrayWithReserved);
+    }
+    
+    const getProductIndex = (id) =>  {
+        const prodIndex = products.findIndex(prod => prod.id === id);
+        return prodIndex;
+    }
+    const addProductsToCart = (id) => {
+        let selectedProduct = products[getProductIndex(id)];
+        if(selectedProduct.available > 0) {
+            selectedProduct.available = selectedProduct.available - 1;
+            selectedProduct.reserved = selectedProduct.reserved + 1;
+        }
+        let updatedArrayProducts = products.filter( (prod) => prod.id !== id);
+        updatedArrayProducts = [...updatedArrayProducts, selectedProduct];
+        setProducts(updatedArrayProducts);
+    }
+
+    const quantityHandler = (id, operation) => {
+            
+            const prodIndex = products.findIndex(prod => prod.id === id);
+            let updatedProducts = [...products];
+            let updatedAvailable = updatedProducts[prodIndex].available;
+            let updatedReserved = updatedProducts[prodIndex].reserved;
+            if (operation === 'plus') {
+                if ( updatedAvailable > 0 ) {
+                    updatedAvailable =  updatedAvailable - 1;
+                    updatedReserved = updatedReserved + 1; 
+                }
+                else {
+                    alert('Ooops, looks like that product is out of stock :( ' );
+                }
+            } else  {
+                if ( updatedAvailable >= 0 ) {
+                    updatedAvailable = updatedProducts[prodIndex].available + 1;
+                    updatedReserved = updatedProducts[prodIndex].reserved - 1; 
+                }
+            }
+            updatedProducts[prodIndex] = {...updatedProducts[prodIndex], available: updatedAvailable, reserved: updatedReserved  }
+            setProducts(updatedProducts);
+            totalPriceCalculator();
+        }
+
+        const totalPriceCalculator = () => {
+                const selectedProducts = products.filter( (prod) => ( prod.reserved > 0));
+                let finalPrice = selectedProducts.reduce ((accumulator, currentProduct) => {
+                    accumulator += currentProduct.price*currentProduct.reserved;
+                    return accumulator;
+            },0)
+
+            setSubTotalPrice(finalPrice);
+        }
+
+        const handleSubmit = (voucher) => {
+            setInsertedVouchers([...insertedVouchers, voucher]);
+        }
+        console.log('== fwtched ==', fetchedProducts);
+        console.log('== prodInCart ==', products);
+        console.log('== vouchers ==', insertedVouchers);
+        
    
-console.log('fetchProd',fetchedProducts);
-console.log('fetchVouchers',fetchedVouchers);
+
 
     return (
         <div className="HomePage container">
-                { fetchedProducts && 
-                    <ProductContainer products={fetchedProducts}/>
+                { products && 
+                    <ProductContainer products={products} isCart={false} addProduct={addProductsToCart} />
                 }  
-            <CartContainer selectedProducts={fetchedProducts}/>
+            
+            <div className="CartArea">
+                <CartContainer products={products} quantityHandler={quantityHandler} values={values} handleSubmit={handleSubmit} />
+                <div className="CartArea__checkoutButton">
+                    <button> CHECKOUT </button>
+                </div>
+            </div>
         </div>
     );
 };

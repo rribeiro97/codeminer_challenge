@@ -9,8 +9,13 @@ const HomePage = () => {
     const [fetchedVouchers,setFetchedVouchers] = useState([]);
     const [insertedVouchers,setInsertedVouchers] = useState([]);
     const [subTotalPrice,setSubTotalPrice] = useState(0);
+    const [shippingPrice,setShippingPrice] = useState(0);
+    const [totalWeight,setTotalWeight] = useState(0);
+    const [totalPrice,setTotalPrice] = useState(0);
+    let [totalDiscount,setTotalDiscount] = useState(0);
     let [products, setProducts] = useState([]);
-    let values = { subtotal: subTotalPrice, shipping:10, discount:20, total:100}
+    let values = { subtotal: subTotalPrice, shipping:shippingPrice, discount: totalDiscount , total:totalPrice}
+    
     
     useEffect(() =>{
         fetchProducts();
@@ -21,7 +26,16 @@ const HomePage = () => {
     useEffect( () => {
         insertReservedData();
     },[fetchedProducts]);
+
+    useEffect( () => {
+        getTotalPrice();
+        shippingHandler();
+    },[subTotalPrice]);
     
+ 
+    useEffect ( () => {
+        voucherHandler();
+    },[insertedVouchers]);
     // Fetch Data Functions
     const fetchProducts = () => {
         axios.get(`https://shielded-wildwood-82973.herokuapp.com/products.json`)
@@ -100,23 +114,81 @@ const HomePage = () => {
 
         const totalPriceCalculator = () => {
                 const selectedProducts = products.filter( (prod) => ( prod.reserved > 0));
+                debugger;
+
                 let finalPrice = selectedProducts.reduce ((accumulator, currentProduct) => {
                     accumulator += currentProduct.price*currentProduct.reserved;
+
                     return accumulator;
-            },0)
+                },0);
+                
+                let finalWeight = selectedProducts.reduce ((accumulator, currentProduct) => {
+                    accumulator += currentProduct.reserved;
+
+                    return accumulator;
+                },0)
+
+    
 
             setSubTotalPrice(finalPrice);
+            setTotalWeight(finalWeight);
         }
 
         const handleSubmit = (voucher) => {
+            const alreadyInserted = insertedVouchers.find( (voucherItem) => voucher === voucherItem);
+            if (!alreadyInserted) 
             setInsertedVouchers([...insertedVouchers, voucher]);
+            else{
+                alert(' Sorry, this voucher is already activated.');
+            }
         }
-        console.log('== fwtched ==', fetchedProducts);
-        console.log('== prodInCart ==', products);
-        console.log('== vouchers ==', insertedVouchers);
-        
-   
 
+        const voucherHandler = () => {
+            debugger;
+            if (insertedVouchers.includes('#30OFF')) {
+                setTotalPrice(totalPrice*0.7);
+                setTotalDiscount(totalDiscount += totalPrice*0.3);
+            }
+
+            if (insertedVouchers.includes('#100DOLLARS')) {
+                if(totalPrice < 100) {
+                    setTotalPrice(0);
+                }else {
+                    setTotalPrice(totalPrice - 100);
+                }
+                setTotalDiscount(totalDiscount += 100);
+            }
+
+            if (insertedVouchers.includes('#SHIPIT') && totalPrice > 300.5) {
+                setShippingPrice(0);
+            } else if(insertedVouchers.includes('#SHIPIT')) { 
+                alert('This voucher is elegible only for purchases above $300.50 ')
+                let deniedVoucherArray = insertedVouchers.filter((voucher) => voucher !== '#SHIPIT');
+                setInsertedVouchers(deniedVoucherArray);
+            }
+        }
+        const getTotalPrice = () => {
+            setTotalPrice( subTotalPrice + shippingPrice - values.discount);
+        }
+       
+
+        const shippingHandler = ( ) => {
+            debugger;
+            if( subTotalPrice > 400) {
+                setShippingPrice(0);
+            }
+            debugger;
+            if (totalWeight <= 10) {
+                setShippingPrice(30);
+            }
+            debugger;
+            if (totalWeight > 10 && subTotalPrice <= 400) {
+                const price = 30 + (((totalWeight - 10)%5)*7);
+                setShippingPrice(price);
+            }
+        }
+   
+        
 
     return (
         <div className="HomePage container">

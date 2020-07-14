@@ -4,6 +4,7 @@
   .header__display {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 10px 0;
 
     .header__logo {
@@ -23,8 +24,19 @@
         margin-right: 10px;
       }
     }
-    @media (min-width: 450px) {
-
-    }
+  }
+  @media (max-width: 600px) {
+    .header__display {
+      margin: 0 auto;
+      max-width: 280px;
+      
+      .header__profile {
+        svg {
+          width:25px;
+          height: 25px;
+          margin-right: 5px;
+        }
+      }
+   }
   }
 }

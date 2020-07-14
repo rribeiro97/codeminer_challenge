@@ -1,9 +1,7 @@
 import React from 'react';
 import './TopBarComponent.scss'
-
-
-const TopBarComponent = () => {
-
+const TopBarComponent = ( props ) => {
+  const isMobile = window.innerWidth < 600;    
   return (
     <header className="TopBarComponent">
       <nav className="header">
@@ -19,7 +17,7 @@ const TopBarComponent = () => {
               src="assets/walter-white.jpg"
               alt="logo"
             />
-            <span>Walter White</span>
+            {!isMobile && <span>Walter White</span>}
           </div>
         </div>
       </nav>

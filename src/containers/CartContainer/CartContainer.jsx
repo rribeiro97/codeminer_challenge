@@ -5,7 +5,7 @@ import VoucherComponent from '../../components/VoucherComponent/VoucherComponent
 import ValuesInformationComponent from '../../components/ValuesInformationComponent/ValuesInformationComponent';
 
 const CartContainer = (props) => {
-    const { products, quantityHandler, values, handleSubmit } = props;
+    const { products, quantityHandler, values, handleSubmit, show } = props;
     const selectedProducts = products.filter( (product) => product.reserved > 0);
 
     
@@ -19,7 +19,7 @@ const CartContainer = (props) => {
         <div className="CartContainer__products">
             {
                 selectedProducts.length === 0 ? <span className="CartContainer__products__zero"> You don't have any product added in Cart :( </span> :
-                <ProductContainer products={selectedProducts} isCart={true} quantityHandler={quantityHandler} />
+                <ProductContainer products={selectedProducts} isCart={true} quantityHandler={quantityHandler} show={show} />
             }
             
         </div>

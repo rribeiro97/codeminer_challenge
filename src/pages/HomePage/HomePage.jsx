@@ -1,4 +1,4 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect, useCallback} from 'react';
 import axios from 'axios';
 import CartContainer from '../../containers/CartContainer/CartContainer'
 import ProductContainer from '../../containers/ProductContainer/ProductContainer'
@@ -15,7 +15,7 @@ const HomePage = () => {
     let [totalDiscount,setTotalDiscount] = useState(0);
     let [products, setProducts] = useState([]);
     let values = { subtotal: subTotalPrice, shipping:shippingPrice, discount: totalDiscount , total:totalPrice}
-    
+    const mobile = window.innerWidth < 600;    
     
     useEffect(() =>{
         fetchProducts();
@@ -114,8 +114,7 @@ const HomePage = () => {
 
         const totalPriceCalculator = () => {
                 const selectedProducts = products.filter( (prod) => ( prod.reserved > 0));
-                debugger;
-
+                
                 let finalPrice = selectedProducts.reduce ((accumulator, currentProduct) => {
                     accumulator += currentProduct.price*currentProduct.reserved;
 
@@ -144,7 +143,6 @@ const HomePage = () => {
         }
 
         const voucherHandler = () => {
-            debugger;
             if (insertedVouchers.includes('#30OFF')) {
                 setTotalPrice(totalPrice*0.7);
                 setTotalDiscount(totalDiscount += totalPrice*0.3);
@@ -173,22 +171,20 @@ const HomePage = () => {
        
 
         const shippingHandler = ( ) => {
-            debugger;
+            
             if( subTotalPrice > 400) {
                 setShippingPrice(0);
             }
-            debugger;
+            
             if (totalWeight <= 10) {
                 setShippingPrice(30);
             }
-            debugger;
+            
             if (totalWeight > 10 && subTotalPrice <= 400) {
                 const price = 30 + (((totalWeight - 10)%5)*7);
                 setShippingPrice(price);
             }
         }
-   
-        
 
     return (
         <div className="HomePage container">
@@ -197,7 +193,7 @@ const HomePage = () => {
                 }  
             
             <div className="CartArea">
-                <CartContainer products={products} quantityHandler={quantityHandler} values={values} handleSubmit={handleSubmit} />
+                <CartContainer products={products} quantityHandler={quantityHandler} values={values} handleSubmit={handleSubmit}/>
                 <div className="CartArea__checkoutButton">
                     <button> CHECKOUT </button>
                 </div>

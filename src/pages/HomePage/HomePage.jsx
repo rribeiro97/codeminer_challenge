@@ -1,4 +1,4 @@
-import React, {useState,useEffect, useCallback} from 'react';
+import React, {useState,useEffect} from 'react';
 import axios from 'axios';
 import CartContainer from '../../containers/CartContainer/CartContainer'
 import ProductContainer from '../../containers/ProductContainer/ProductContainer'
@@ -15,7 +15,6 @@ const HomePage = () => {
     let [totalDiscount,setTotalDiscount] = useState(0);
     let [products, setProducts] = useState([]);
     let values = { subtotal: subTotalPrice, shipping:shippingPrice, discount: totalDiscount , total:totalPrice}
-    const mobile = window.innerWidth < 600;    
     
     useEffect(() =>{
         fetchProducts();
@@ -143,26 +142,29 @@ const HomePage = () => {
         }
 
         const voucherHandler = () => {
-            if (insertedVouchers.includes('#30OFF')) {
-                setTotalPrice(totalPrice*0.7);
-                setTotalDiscount(totalDiscount += totalPrice*0.3);
-            }
-
-            if (insertedVouchers.includes('#100DOLLARS')) {
-                if(totalPrice < 100) {
-                    setTotalPrice(0);
-                }else {
-                    setTotalPrice(totalPrice - 100);
+            debugger;
+            if(fetchedVouchers.length !== 0) {    
+                if (insertedVouchers.includes(fetchedVouchers[0].code)) {
+                    setTotalPrice(totalPrice*0.7);
+                    setTotalDiscount(totalDiscount += totalPrice*0.3);
                 }
-                setTotalDiscount(totalDiscount += 100);
-            }
 
-            if (insertedVouchers.includes('#SHIPIT') && totalPrice > 300.5) {
-                setShippingPrice(0);
-            } else if(insertedVouchers.includes('#SHIPIT')) { 
-                alert('This voucher is elegible only for purchases above $300.50 ')
-                let deniedVoucherArray = insertedVouchers.filter((voucher) => voucher !== '#SHIPIT');
-                setInsertedVouchers(deniedVoucherArray);
+                if (insertedVouchers.includes(fetchedVouchers[1].code)) {
+                    if(totalPrice < 100) {
+                        setTotalPrice(0);
+                    }else {
+                        setTotalPrice(totalPrice - 100);
+                    }
+                    setTotalDiscount(totalDiscount += 100);
+                }
+
+                if (insertedVouchers.includes(fetchedVouchers[2].code) && totalPrice > fetchedVouchers[2].minValue) {
+                    setShippingPrice(0);
+                } else if(insertedVouchers.includes(fetchedVouchers[2].code)) { 
+                    alert('This voucher is elegible only for purchases above $300.50 ')
+                    let deniedVoucherArray = insertedVouchers.filter((voucher) => voucher !== fetchedVouchers[2].code);
+                    setInsertedVouchers(deniedVoucherArray);
+                }
             }
         }
         const getTotalPrice = () => {
@@ -185,6 +187,8 @@ const HomePage = () => {
                 setShippingPrice(price);
             }
         }
+
+        console.log(fetchedVouchers);
 
     return (
         <div className="HomePage container">

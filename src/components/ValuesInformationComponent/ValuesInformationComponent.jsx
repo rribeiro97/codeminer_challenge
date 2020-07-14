@@ -3,7 +3,6 @@ import './ValuesInformationComponent.scss';
 
 const ValuesInformationComponent = (props) => {
     const { values } = props;
-    console.log('ValueInfor',props)
         return(
             <div className="ValuesInformationComponent">
                 <div className="ValuesInformationComponent__Subtotal" > 

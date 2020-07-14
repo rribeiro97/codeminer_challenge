@@ -39,10 +39,8 @@ const HomePage = () => {
     const fetchProducts = () => {
         axios.get(`https://shielded-wildwood-82973.herokuapp.com/products.json`)
         .then( res => {
-            console.log('axiosres', res);
             setFetchedProducts(res.data.products);
         }).catch( error => {
-            console.log('prod error',error);
             fetchProducts();
         });
     }
@@ -50,10 +48,7 @@ const HomePage = () => {
     const fetchVouchers = () => {
         axios.get(`https://shielded-wildwood-82973.herokuapp.com/vouchers.json`)
         .then( res => {
-            console.log('axiosresVoucher', res);
-            setFetchedVouchers(res.data.vouchers);
         }).catch( error => {
-            console.log('voucher',error);
             fetchVouchers();
         });
     }
@@ -188,7 +183,6 @@ const HomePage = () => {
             }
         }
 
-        console.log(fetchedVouchers);
 
     return (
         <div className="HomePage container">
@@ -199,7 +193,7 @@ const HomePage = () => {
             <div className="CartArea">
                 <CartContainer products={products} quantityHandler={quantityHandler} values={values} handleSubmit={handleSubmit}/>
                 <div className="CartArea__checkoutButton">
-                    <button> CHECKOUT </button>
+                    <button onClick={() => alert('Your purchase was sucessful :) ')}> CHECKOUT </button>
                 </div>
             </div>
         </div>

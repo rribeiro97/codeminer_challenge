@@ -3,7 +3,6 @@ import './ProductCardComponent.scss';
 
 const ProductCardComponent = (props) => {
     const { product, isCart, addProduct, quantityHandler } = props;
-    console.log('productCard',props);
             return(
             <>
             {isCart ? (

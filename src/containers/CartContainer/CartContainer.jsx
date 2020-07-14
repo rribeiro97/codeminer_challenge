@@ -9,9 +9,8 @@ const CartContainer = (props) => {
     const selectedProducts = products.filter( (product) => product.reserved > 0);
 
     
-    console.log('propCartContainer',props);
     return( 
-    <div className="CartContainer">
+    <div className="CartContainer" data-testid="cart-container">
         <div className="CartContainer__title">
             <h2> Shopping Cart</h2>
         </div>

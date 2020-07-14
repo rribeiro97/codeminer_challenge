@@ -193,7 +193,7 @@ const HomePage = () => {
             <div className="CartArea">
                 <CartContainer products={products} quantityHandler={quantityHandler} values={values} handleSubmit={handleSubmit}/>
                 <div className="CartArea__checkoutButton">
-                    <button onClick={() => alert('Your purchase was sucessful :) ')}> CHECKOUT </button>
+                    <button onClick={() => alert('Your purchase was successful :) ')}> CHECKOUT </button>
                 </div>
             </div>
         </div>
